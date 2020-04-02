@@ -9,5 +9,11 @@ namespace TestProject
         public void TestMethod1()
         {
         }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            Assert.IsTrue(false);
+        }
     }
 }
