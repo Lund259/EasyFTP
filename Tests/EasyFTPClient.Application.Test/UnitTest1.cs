@@ -9,7 +9,6 @@ namespace EasyFTPClient.Application.Test
         {
         }
 
-
         [Test]
         public void Test1()
         {
