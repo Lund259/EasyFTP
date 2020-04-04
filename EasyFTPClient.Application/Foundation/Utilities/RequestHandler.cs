@@ -13,7 +13,23 @@ namespace EasyFTPClient.Application.Foundation.Utilities
     {
         public IRequest CreateFTPWebRequest(IConnectionProvider connectionProvider, string path, string requestMethod)
         {
-            var url = $"{connectionProvider.Url.AbsoluteUri}/{path}";
+            if (connectionProvider is null)
+            {
+                throw new ArgumentException("connectionProvider cannot be null", nameof(connectionProvider));
+            }
+
+            if(connectionProvider.Url is null)
+            {
+                throw new ArgumentException("connectionProvider must contain a valid Url", nameof(connectionProvider));
+            }
+
+            if (string.IsNullOrWhiteSpace(requestMethod))
+            {
+                throw new ArgumentException("a valid requestMethod must be provided", nameof(requestMethod));
+            }
+
+            //AbsoluteUri includes / at the end
+            var url = $"{connectionProvider.Url.AbsoluteUri}{path}";
 
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
             request.Method = requestMethod;

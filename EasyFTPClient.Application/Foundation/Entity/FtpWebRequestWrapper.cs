@@ -10,6 +10,10 @@ namespace EasyFTPClient.Application.Foundation.Entity
     {
         private readonly FtpWebRequest ftpWebRequest;
 
+        public Uri RequestUri => ftpWebRequest?.RequestUri;
+        public string Method => ftpWebRequest?.Method;
+        public ICredentials Credentials => ftpWebRequest?.Credentials;
+
         public FtpWebRequestWrapper(FtpWebRequest ftpWebRequest)
         {
             this.ftpWebRequest = ftpWebRequest;
@@ -17,7 +21,7 @@ namespace EasyFTPClient.Application.Foundation.Entity
 
         public IResponse GetResponse()
         {
-            return new FtpWebResponseWrapper((FtpWebResponse)ftpWebRequest.GetResponse());
+            return new FtpWebResponseWrapper((FtpWebResponse)ftpWebRequest?.GetResponse());
         }
     }
 }
