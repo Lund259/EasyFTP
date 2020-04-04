@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Controller\" />
-    <Folder Include="Foundation\" />
     <Folder Include="BLL\" />
   </ItemGroup>
 
