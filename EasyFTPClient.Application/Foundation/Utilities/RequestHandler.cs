@@ -1,4 +1,5 @@
-﻿using EasyFTPClient.Application.Foundation.Entity;
+﻿using EasyFTPClient.Application.Acquaintance.Interfaces;
+using EasyFTPClient.Application.Foundation.Entity;
 using EasyFTPClient.Application.Foundation.Entity.Interfaces;
 using EasyFTPClient.Application.Foundation.Utilities.Interfaces;
 using System;
@@ -40,6 +41,11 @@ namespace EasyFTPClient.Application.Foundation.Utilities
 
         public string GetResponseString(IRequest request)
         {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             using var response = request.GetResponse();
             using var responseStream = response.GetResponseStream();
             using var reader = new StreamReader(responseStream);
