@@ -1,4 +1,5 @@
-﻿using EasyFTPClient.Application.Foundation.Entity.Interfaces;
+﻿using EasyFTPClient.Application.Acquaintance.Interfaces;
+using EasyFTPClient.Application.Foundation.Entity.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net;
