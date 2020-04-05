@@ -39,8 +39,10 @@ namespace EasyFTPClient.Application.Foundation.Utilities
             return new FtpWebRequestWrapper(request);
         }
 
-        public string GetResponseString(IRequest request)
+        public IList<string> GetResponseStrings(IRequest request)
         {
+            List<string> dataListings = new List<string>();
+
             if (request is null)
             {
                 throw new ArgumentNullException(nameof(request));
@@ -50,12 +52,16 @@ namespace EasyFTPClient.Application.Foundation.Utilities
             using var responseStream = response.GetResponseStream();
             using var reader = new StreamReader(responseStream);
 
-            var responseString = reader.ReadToEnd();
+            while (!reader.EndOfStream)
+            {
+                var dataListing = reader.ReadLine();
+                dataListings.Add(dataListing);
+            }
 
             reader.Close();
             response.Close();
 
-            return responseString;
+            return dataListings;
         }
     }
 }

@@ -10,6 +10,6 @@ namespace EasyFTPClient.Application.Foundation.Utilities.Interfaces
     public interface IRequestHandler
     {
         IRequest CreateFTPWebRequest(IConnectionProvider connectionProvider, string path, string requestMethod);
-        string GetResponseString(IRequest request);
+        IList<string> GetResponseStrings(IRequest request);
     }
 }

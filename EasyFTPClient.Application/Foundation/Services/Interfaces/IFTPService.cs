@@ -6,6 +6,6 @@ namespace EasyFTPClient.Application.Foundation.Services.Interfaces
 {
     public interface IFTPService
     {
-        string GetDirectoryContent(string path);
+        IList<string> GetDirectoryDataListings(string path);
     }
 }

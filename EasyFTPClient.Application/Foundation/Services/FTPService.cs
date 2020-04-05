@@ -20,14 +20,14 @@ namespace EasyFTPClient.Application.Foundation.Services
             this.connectionProvider = connectionProvider;
         }
 
-        public string GetDirectoryContent(string path)
+        public IList<string> GetDirectoryDataListings(string path)
         {
             var requestMethod = WebRequestMethods.Ftp.ListDirectoryDetails;
             var request = requestHandler.CreateFTPWebRequest(connectionProvider, path, requestMethod);
 
-            var responseString = requestHandler.GetResponseString(request);
+            var directoryContent = requestHandler.GetResponseStrings(request);
 
-            return responseString;
+            return directoryContent;
         }
     }
 }
