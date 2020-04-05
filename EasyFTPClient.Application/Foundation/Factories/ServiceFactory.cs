@@ -15,7 +15,7 @@ namespace EasyFTPClient.Application.Foundation.Factories
 
         public IFTPService CreateFTPService(IConnectionProvider connectionProvider)
         {
-            return new FTPService(utilityFactory.CreateRequestHandler(), connectionProvider);
+            return new FTPService(utilityFactory.CreateRequestHandler(), connectionProvider, utilityFactory.CreateFTPFileInfoParser());
         }
     }
 }

@@ -13,11 +13,13 @@ namespace EasyFTPClient.Application.Foundation.Services
     {
         private readonly IRequestHandler requestHandler;
         private readonly IConnectionProvider connectionProvider;
+        private readonly IFTPFileInfoParser fTPFileInfoParser;
 
-        public FTPService(IRequestHandler requestHandler, IConnectionProvider connectionProvider)
+        public FTPService(IRequestHandler requestHandler, IConnectionProvider connectionProvider, IFTPFileInfoParser fTPFileInfoParser)
         {
             this.requestHandler = requestHandler;
             this.connectionProvider = connectionProvider;
+            this.fTPFileInfoParser = fTPFileInfoParser;
         }
 
         public IList<string> GetDirectoryDataListings(string path)
@@ -25,7 +27,15 @@ namespace EasyFTPClient.Application.Foundation.Services
             var requestMethod = WebRequestMethods.Ftp.ListDirectoryDetails;
             var request = requestHandler.CreateFTPWebRequest(connectionProvider, path, requestMethod);
 
-            var directoryContent = requestHandler.GetResponseStrings(request);
+            var directoryDataListings = requestHandler.GetResponseStrings(request);
+
+            return directoryDataListings;
+        }
+
+        public IList<IFTPFileInfo> GetDirectoryContents(string path)
+        {
+            var directoryDataListings = GetDirectoryDataListings(path);
+            var directoryContent = fTPFileInfoParser.ParseStringData(directoryDataListings);
 
             return directoryContent;
         }
