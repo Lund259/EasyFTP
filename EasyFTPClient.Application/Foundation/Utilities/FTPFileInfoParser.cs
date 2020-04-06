@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace EasyFTPClient.Application.Foundation.Utilities
 {
-    public class FTPFileInfoParser : IFTPFileInfoParser
+    public class FtpFileInfoParser : IFtpFileInfoParser
     {
         private const string nixRegexPattern = @"^([d-])([\w-]+)\s+(\d+)\s+(\w+)\s+(\w+)\s+(\d+)\s+(\w+\s+\d+\s+\d+|\w+\s+\d+\s+\d+:\d+)\s+(.+)$";
         private const string dosRegexPattern = @"^(\d+-\d+-\d+\s+\d+:\d+(?:AM|PM))\s+(<DIR>|\d+)\s+(.+)$";
@@ -20,21 +20,21 @@ namespace EasyFTPClient.Application.Foundation.Utilities
         private static readonly Regex dosRegex = new Regex(dosRegexPattern);
         private static readonly IFormatProvider culture = CultureInfo.InvariantCulture;
 
-        public IList<IFTPFileInfo> ParseStringData(IEnumerable<string> dataListings)
+        public IList<IFtpFileInfo> ParseStringData(IEnumerable<string> dataListings)
         {
-            IList<IFTPFileInfo> result = new List<IFTPFileInfo>();
+            IList<IFtpFileInfo> result = new List<IFtpFileInfo>();
 
             foreach (var dataListing in dataListings)
             {
                 var dataFormat = GetDataFormat(dataListing);
-                IFTPFileInfo newFTPFileInfo = dataFormat switch
+                IFtpFileInfo newFtpFileInfo = dataFormat switch
                 {
                     DataFormat.DosWindows => ParseDosString(dataListing),
                     DataFormat.Nix => ParseNixString(dataListing),
                     _ => throw new NotImplementedException($"A parser for {dataFormat} format has not been implemented")
                 };
 
-                result.Add(newFTPFileInfo);
+                result.Add(newFtpFileInfo);
             }
 
             return result;
@@ -65,7 +65,7 @@ namespace EasyFTPClient.Application.Foundation.Utilities
             return dataFormat;
         }
 
-        public IFTPFileInfo ParseNixString(string dataListing)
+        public IFtpFileInfo ParseNixString(string dataListing)
         {
             if (string.IsNullOrWhiteSpace(dataListing))
             {
@@ -98,10 +98,10 @@ namespace EasyFTPClient.Application.Foundation.Utilities
                 lastModified = DateTime.ParseExact(sanitizedString, yearFormats, culture, DateTimeStyles.None);
             }
 
-            return new FTPFileInfo(isDirectory, fileSize, lastModified, fileName);
+            return new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
         }
 
-        public IFTPFileInfo ParseDosString(string dataListing)
+        public IFtpFileInfo ParseDosString(string dataListing)
         {
             if (string.IsNullOrWhiteSpace(dataListing))
             {
@@ -115,7 +115,7 @@ namespace EasyFTPClient.Application.Foundation.Utilities
             string fileName = match.Groups[3].Value;
             bool isDirectory = string.Equals(match.Groups[2].Value, "<DIR>", StringComparison.InvariantCultureIgnoreCase);
 
-            return new FTPFileInfo(isDirectory, fileSize, lastModified, fileName);
+            return new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
         }
     }
 }
