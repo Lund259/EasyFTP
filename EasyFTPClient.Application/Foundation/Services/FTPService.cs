@@ -9,33 +9,33 @@ using System.Text;
 
 namespace EasyFTPClient.Application.Foundation.Services
 {
-    public class FTPService : IFTPService
+    public class FtpService : IFtpService
     {
         private readonly IRequestHandler requestHandler;
         private readonly IConnectionProvider connectionProvider;
-        private readonly IFTPFileInfoParser fTPFileInfoParser;
+        private readonly IFtpFileInfoParser ftpFileInfoParser;
 
-        public FTPService(IRequestHandler requestHandler, IConnectionProvider connectionProvider, IFTPFileInfoParser fTPFileInfoParser)
+        public FtpService(IRequestHandler requestHandler, IConnectionProvider connectionProvider, IFtpFileInfoParser fTPFileInfoParser)
         {
             this.requestHandler = requestHandler;
             this.connectionProvider = connectionProvider;
-            this.fTPFileInfoParser = fTPFileInfoParser;
+            this.ftpFileInfoParser = fTPFileInfoParser;
         }
 
         public IList<string> GetDirectoryDataListings(string path)
         {
             var requestMethod = WebRequestMethods.Ftp.ListDirectoryDetails;
-            var request = requestHandler.CreateFTPWebRequest(connectionProvider, path, requestMethod);
+            var request = requestHandler.CreateFtpWebRequest(connectionProvider, path, requestMethod);
 
             var directoryDataListings = requestHandler.GetResponseStrings(request);
 
             return directoryDataListings;
         }
 
-        public IList<IFTPFileInfo> GetDirectoryContents(string path)
+        public IList<IFtpFileInfo> GetDirectoryContents(string path)
         {
             var directoryDataListings = GetDirectoryDataListings(path);
-            var directoryContent = fTPFileInfoParser.ParseStringData(directoryDataListings);
+            var directoryContent = ftpFileInfoParser.ParseStringData(directoryDataListings);
 
             return directoryContent;
         }

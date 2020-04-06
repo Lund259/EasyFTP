@@ -12,7 +12,7 @@ namespace EasyFTPClient.Application.Foundation.Utilities
 {
     public class RequestHandler : IRequestHandler
     {
-        public IRequest CreateFTPWebRequest(IConnectionProvider connectionProvider, string path, string requestMethod)
+        public IRequest CreateFtpWebRequest(IConnectionProvider connectionProvider, string path, string requestMethod)
         {
             if (connectionProvider is null)
             {

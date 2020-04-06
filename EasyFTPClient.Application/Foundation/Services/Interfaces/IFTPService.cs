@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EasyFTPClient.Application.Foundation.Services.Interfaces
 {
-    public interface IFTPService
+    public interface IFtpService
     {
         IList<string> GetDirectoryDataListings(string path);
     }

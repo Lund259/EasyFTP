@@ -28,7 +28,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
         }
 
         [Test]
-        public void CreateFTPWebRequest_Success()
+        public void CreateFtpWebRequest_Success()
         {
             //Arrange
             var path = "folder1/folder2";
@@ -40,7 +40,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             var expectedRequestMethod = requestMethod;
 
             //Act
-            var request = requestHandler.CreateFTPWebRequest(connection, path, requestMethod);
+            var request = requestHandler.CreateFtpWebRequest(connection, path, requestMethod);
 
             //Assert
             Assert.NotNull(request);
@@ -52,7 +52,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
         [TestCase("testFolder", "", true)]
         [TestCase("TestFolder", WebRequestMethods.Ftp.ListDirectoryDetails, false)]
         [TestCase("testFolder", null, true)]
-        public void CreateFTPWebRequest_InvalidArgument_ThrowException(string path, string requestMethod, bool validConnection)
+        public void CreateFtpWebRequest_InvalidArgument_ThrowException(string path, string requestMethod, bool validConnection)
         {
             //Arrange
             var connection = validConnection ? dummyConnection : null;
@@ -60,12 +60,12 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             //Act
 
             //Assert
-            Assert.Throws<ArgumentException>(() => requestHandler.CreateFTPWebRequest(connection, path, requestMethod));
+            Assert.Throws<ArgumentException>(() => requestHandler.CreateFtpWebRequest(connection, path, requestMethod));
         }
 
         [TestCase("")]
         [TestCase(null)]
-        public void CreateFTPWebRequest_EmptyOrNullPath_DoesNotThrowException(string path)
+        public void CreateFtpWebRequest_EmptyOrNullPath_DoesNotThrowException(string path)
         {
             //Arrange
             var connection = dummyConnection;
@@ -74,7 +74,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             //Act
 
             //Assert
-            Assert.DoesNotThrow(() => requestHandler.CreateFTPWebRequest(connection, path, requestMethod));
+            Assert.DoesNotThrow(() => requestHandler.CreateFtpWebRequest(connection, path, requestMethod));
         }
 
         [Test]
