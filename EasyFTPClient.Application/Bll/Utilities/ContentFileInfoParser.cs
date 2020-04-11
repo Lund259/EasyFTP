@@ -1,5 +1,7 @@
 ﻿using EasyFTPClient.Application.Acquaintance;
 using EasyFTPClient.Application.Acquaintance.Interfaces;
+using EasyFTPClient.Application.Bll.Entity;
+using EasyFTPClient.Application.Bll.Utilities.Interfaces;
 using EasyFTPClient.Application.Foundation.Entity;
 using EasyFTPClient.Application.Foundation.Utilities.Interfaces;
 using System;
@@ -9,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace EasyFTPClient.Application.Foundation.Utilities
+namespace EasyFTPClient.Bll.Foundation.Utilities
 {
-    public class FtpFileInfoParser : IFtpFileInfoParser
+    public class ContentFileInfoParser : IContentFileInfoParser
     {
         private const string nixRegexPattern = @"^([d-])([\w-]+)\s+(\d+)\s+(\w+)\s+(\w+)\s+(\d+)\s+(\w+\s+\d+\s+\d+|\w+\s+\d+\s+\d+:\d+)\s+(.+)$";
         private const string dosRegexPattern = @"^(\d+-\d+-\d+\s+\d+:\d+(?:AM|PM))\s+(<DIR>|\d+)\s+(.+)$";
@@ -20,14 +22,14 @@ namespace EasyFTPClient.Application.Foundation.Utilities
         private static readonly Regex dosRegex = new Regex(dosRegexPattern);
         private static readonly IFormatProvider culture = CultureInfo.InvariantCulture;
 
-        public IList<IFtpFileInfo> ParseStringData(IEnumerable<string> dataListings)
+        public IList<IContentFileInfo> ParseStringData(IEnumerable<string> dataListings)
         {
-            IList<IFtpFileInfo> result = new List<IFtpFileInfo>();
+            IList<IContentFileInfo> result = new List<IContentFileInfo>();
 
             foreach (var dataListing in dataListings)
             {
                 var dataFormat = GetDataFormat(dataListing);
-                IFtpFileInfo newFtpFileInfo = dataFormat switch
+                IContentFileInfo newFtpFileInfo = dataFormat switch
                 {
                     DataFormat.DosWindows => ParseDosString(dataListing),
                     DataFormat.Nix => ParseNixString(dataListing),
@@ -65,7 +67,7 @@ namespace EasyFTPClient.Application.Foundation.Utilities
             return dataFormat;
         }
 
-        public IFtpFileInfo ParseNixString(string dataListing)
+        public IContentFileInfo ParseNixString(string dataListing)
         {
             if (string.IsNullOrWhiteSpace(dataListing))
             {
@@ -98,10 +100,10 @@ namespace EasyFTPClient.Application.Foundation.Utilities
                 lastModified = DateTime.ParseExact(sanitizedString, yearFormats, culture, DateTimeStyles.None);
             }
 
-            return new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
+            return new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
         }
 
-        public IFtpFileInfo ParseDosString(string dataListing)
+        public IContentFileInfo ParseDosString(string dataListing)
         {
             if (string.IsNullOrWhiteSpace(dataListing))
             {
@@ -115,7 +117,7 @@ namespace EasyFTPClient.Application.Foundation.Utilities
             string fileName = match.Groups[3].Value;
             bool isDirectory = string.Equals(match.Groups[2].Value, "<DIR>", StringComparison.InvariantCultureIgnoreCase);
 
-            return new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
+            return new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
         }
     }
 }

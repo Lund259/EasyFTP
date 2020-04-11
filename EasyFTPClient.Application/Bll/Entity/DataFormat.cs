@@ -1,4 +1,4 @@
-﻿namespace EasyFTPClient.Application.Foundation.Entity
+﻿namespace EasyFTPClient.Application.Bll.Entity
 {
 
     public enum DataFormat

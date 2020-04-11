@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EasyFTPClient.Application.Acquaintance.Interfaces
 {
-    public interface IFtpFileInfo
+    public interface IContentFileInfo
     {
         bool IsDirectory { get; }
         long FileSize { get; }

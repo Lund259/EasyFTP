@@ -13,9 +13,9 @@ namespace EasyFTPClient.Application.Foundation.Factories
     {
         UtilityFactory utilityFactory = new UtilityFactory();
 
-        public IFtpService CreateFtpService(IConnectionProvider connectionProvider)
+        public IContentService CreateFtpService(IConnectionProvider connectionProvider)
         {
-            return new FtpService(utilityFactory.CreateRequestHandler(), connectionProvider, utilityFactory.CreateFtpFileInfoParser());
+            return new FtpService(utilityFactory.CreateRequestHandler(), connectionProvider);
         }
     }
 }

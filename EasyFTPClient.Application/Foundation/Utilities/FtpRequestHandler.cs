@@ -10,7 +10,7 @@ using System.Text;
 
 namespace EasyFTPClient.Application.Foundation.Utilities
 {
-    public class RequestHandler : IRequestHandler
+    public class FtpRequestHandler : IRequestHandler
     {
         public IRequest CreateFtpWebRequest(IConnectionProvider connectionProvider, string path, string requestMethod)
         {
