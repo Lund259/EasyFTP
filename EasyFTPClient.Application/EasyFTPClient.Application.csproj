@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Fascade\" />
+    <Folder Include="Bll\Entity\Interfaces\" />
+    <Folder Include="Fascade\Entity\Interfaces\" />
   </ItemGroup>
 
 </Project>
