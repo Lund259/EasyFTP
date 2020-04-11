@@ -78,7 +78,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
                 year = DateTime.Now.Year;
 
             var lastModified = new DateTime(year, month, day, hour, minute, 0);
-            var expected = new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
+            var expected = new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
 
             //Act
             var actual = FtpFileInfoParser.ParseNixString(dataListing);
@@ -114,7 +114,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
                 year = DateTime.Now.Year;
 
             var lastModified = new DateTime(year, month, day, hour, minute, 0);
-            var expected = new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
+            var expected = new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
 
             //Act
             var actual = FtpFileInfoParser.ParseDosString(dataListing);

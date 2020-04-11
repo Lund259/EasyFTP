@@ -99,7 +99,7 @@ namespace EasyFTPClient.Bll.Foundation.Utilities
                 lastModified = DateTime.ParseExact(sanitizedString, yearFormats, culture, DateTimeStyles.None);
             }
 
-            return new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
+            return new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
         }
 
         public IContentFileInfo ParseDosString(string dataListing)
@@ -116,7 +116,7 @@ namespace EasyFTPClient.Bll.Foundation.Utilities
             string fileName = match.Groups[3].Value;
             bool isDirectory = string.Equals(match.Groups[2].Value, "<DIR>", StringComparison.InvariantCultureIgnoreCase);
 
-            return new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
+            return new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
         }
     }
 }
