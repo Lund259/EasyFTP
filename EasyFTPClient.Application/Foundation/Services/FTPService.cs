@@ -9,7 +9,7 @@ using System.Text;
 
 namespace EasyFTPClient.Application.Foundation.Services
 {
-    public class FtpService : IFtpService
+    public class FtpService : IContentService
     {
         private readonly IRequestHandler requestHandler;
         private readonly IConnectionProvider connectionProvider;

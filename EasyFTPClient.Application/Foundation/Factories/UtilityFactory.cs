@@ -10,7 +10,7 @@ namespace EasyFTPClient.Application.Foundation.Factories
     {
         public IRequestHandler CreateRequestHandler()
         {
-            return new RequestHandler();
+            return new FtpRequestHandler();
         }
 
         public IFtpFileInfoParser CreateFtpFileInfoParser()

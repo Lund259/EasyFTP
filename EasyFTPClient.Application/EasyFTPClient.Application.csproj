@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Bll\Application\" />
+    <Folder Include="Bll\Application\Interfaces\" />
     <Folder Include="Controller\" />
   </ItemGroup>
 
