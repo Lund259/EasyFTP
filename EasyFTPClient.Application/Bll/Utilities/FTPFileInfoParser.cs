@@ -1,5 +1,6 @@
 ﻿using EasyFTPClient.Application.Acquaintance;
 using EasyFTPClient.Application.Acquaintance.Interfaces;
+using EasyFTPClient.Application.Bll.Utilities.Interfaces;
 using EasyFTPClient.Application.Foundation.Entity;
 using EasyFTPClient.Application.Foundation.Utilities.Interfaces;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace EasyFTPClient.Application.Foundation.Utilities
+namespace EasyFTPClient.Bll.Foundation.Utilities
 {
     public class FtpFileInfoParser : IFtpFileInfoParser
     {

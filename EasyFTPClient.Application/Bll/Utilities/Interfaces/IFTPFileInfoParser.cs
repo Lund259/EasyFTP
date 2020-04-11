@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EasyFTPClient.Application.Foundation.Utilities.Interfaces
+namespace EasyFTPClient.Application.Bll.Utilities.Interfaces
 {
     public interface IFtpFileInfoParser
     {

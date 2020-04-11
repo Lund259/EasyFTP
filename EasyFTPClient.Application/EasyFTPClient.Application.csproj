@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Bll\Application\" />
     <Folder Include="Controller\" />
-    <Folder Include="BLL\" />
   </ItemGroup>
 
 </Project>
