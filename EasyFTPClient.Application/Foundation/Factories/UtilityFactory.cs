@@ -13,9 +13,5 @@ namespace EasyFTPClient.Application.Foundation.Factories
             return new FtpRequestHandler();
         }
 
-        public IFtpFileInfoParser CreateFtpFileInfoParser()
-        {
-            return new FtpFileInfoParser();
-        }
     }
 }
