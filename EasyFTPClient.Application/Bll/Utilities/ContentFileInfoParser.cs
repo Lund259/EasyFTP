@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace EasyFTPClient.Bll.Foundation.Utilities
 {
-    public class FtpFileInfoParser : IFtpFileInfoParser
+    public class ContentFileInfoParser : IContentFileInfoParser
     {
         private const string nixRegexPattern = @"^([d-])([\w-]+)\s+(\d+)\s+(\w+)\s+(\w+)\s+(\d+)\s+(\w+\s+\d+\s+\d+|\w+\s+\d+\s+\d+:\d+)\s+(.+)$";
         private const string dosRegexPattern = @"^(\d+-\d+-\d+\s+\d+:\d+(?:AM|PM))\s+(<DIR>|\d+)\s+(.+)$";
@@ -21,14 +21,14 @@ namespace EasyFTPClient.Bll.Foundation.Utilities
         private static readonly Regex dosRegex = new Regex(dosRegexPattern);
         private static readonly IFormatProvider culture = CultureInfo.InvariantCulture;
 
-        public IList<IFtpFileInfo> ParseStringData(IEnumerable<string> dataListings)
+        public IList<IContentFileInfo> ParseStringData(IEnumerable<string> dataListings)
         {
-            IList<IFtpFileInfo> result = new List<IFtpFileInfo>();
+            IList<IContentFileInfo> result = new List<IContentFileInfo>();
 
             foreach (var dataListing in dataListings)
             {
                 var dataFormat = GetDataFormat(dataListing);
-                IFtpFileInfo newFtpFileInfo = dataFormat switch
+                IContentFileInfo newFtpFileInfo = dataFormat switch
                 {
                     DataFormat.DosWindows => ParseDosString(dataListing),
                     DataFormat.Nix => ParseNixString(dataListing),
@@ -66,7 +66,7 @@ namespace EasyFTPClient.Bll.Foundation.Utilities
             return dataFormat;
         }
 
-        public IFtpFileInfo ParseNixString(string dataListing)
+        public IContentFileInfo ParseNixString(string dataListing)
         {
             if (string.IsNullOrWhiteSpace(dataListing))
             {
@@ -102,7 +102,7 @@ namespace EasyFTPClient.Bll.Foundation.Utilities
             return new FtpFileInfo(isDirectory, fileSize, lastModified, fileName);
         }
 
-        public IFtpFileInfo ParseDosString(string dataListing)
+        public IContentFileInfo ParseDosString(string dataListing)
         {
             if (string.IsNullOrWhiteSpace(dataListing))
             {

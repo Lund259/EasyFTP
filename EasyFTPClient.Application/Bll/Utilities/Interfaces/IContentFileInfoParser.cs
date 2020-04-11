@@ -6,11 +6,11 @@ using System.Text;
 
 namespace EasyFTPClient.Application.Bll.Utilities.Interfaces
 {
-    public interface IFtpFileInfoParser
+    public interface IContentFileInfoParser
     {
         DataFormat GetDataFormat(string dataListing);
-        IFtpFileInfo ParseDosString(string dataListing);
-        IFtpFileInfo ParseNixString(string dataListing);
-        IList<IFtpFileInfo> ParseStringData(IEnumerable<string> dataListings);
+        IContentFileInfo ParseDosString(string dataListing);
+        IContentFileInfo ParseNixString(string dataListing);
+        IList<IContentFileInfo> ParseStringData(IEnumerable<string> dataListings);
     }
 }
