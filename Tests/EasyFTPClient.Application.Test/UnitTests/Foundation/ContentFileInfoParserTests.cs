@@ -1,6 +1,7 @@
 ﻿using EasyFTPClient.Application.Acquaintance;
-using EasyFTPClient.Application.Foundation.Entity;
-using EasyFTPClient.Application.Foundation.Factories;
+using EasyFTPClient.Application.Bll.Entity;
+using EasyFTPClient.Application.Bll.Factories;
+using EasyFTPClient.Application.Bll.Utilities.Interfaces;
 using EasyFTPClient.Application.Foundation.Utilities.Interfaces;
 using NUnit.Framework;
 using System;
@@ -11,14 +12,14 @@ using System.Text;
 namespace EasyFTPClient.Application.Test.UnitTests.Foundation
 {
     [TestFixture]
-    public class FtpFileInfoParserTests
+    public class ContentFileInfoParserTests
     {
-        IFtpFileInfoParser FtpFileInfoParser;
+        IContentFileInfoParser ContentFileInfoParser;
 
         [SetUp]
         public void Setup()
         {
-            FtpFileInfoParser = new UtilityFactory().CreateFtpFileInfoParser();
+            ContentFileInfoParser = new UtilityFactory().CreateContentFileInfoParser();
         }
 
         [TestCase("08-10-11  12:02PM       <DIR>          Version2", DataFormat.DosWindows)]
@@ -35,7 +36,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
 
             var expected = dataFormat;
             //Act
-            var actual = FtpFileInfoParser.GetDataFormat(dataListing);
+            var actual = ContentFileInfoParser.GetDataFormat(dataListing);
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -51,7 +52,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             //Act
 
             //Assert
-            Assert.Throws<ArgumentException>(() => FtpFileInfoParser.GetDataFormat(dataListing));
+            Assert.Throws<ArgumentException>(() => ContentFileInfoParser.GetDataFormat(dataListing));
         }
 
         [TestCase("      ")]
@@ -64,7 +65,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             //Act
 
             //Assert
-            Assert.Throws<ArgumentException>(() => FtpFileInfoParser.ParseNixString(dataListing));
+            Assert.Throws<ArgumentException>(() => ContentFileInfoParser.ParseNixString(dataListing));
         }
 
         [TestCase("d--x--x--x    2 ftp      ftp          4096 Mar 07  2002 bin", true, 4096, "bin", 0, 0, 07, 3, 2002)]
@@ -81,7 +82,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             var expected = new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
 
             //Act
-            var actual = FtpFileInfoParser.ParseNixString(dataListing);
+            var actual = ContentFileInfoParser.ParseNixString(dataListing);
 
             //Assert
             Assert.AreEqual(expected.IsDirectory, actual.IsDirectory);
@@ -100,7 +101,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             //Act
 
             //Assert
-            Assert.Throws<ArgumentException>(() => FtpFileInfoParser.ParseDosString(dataListing));
+            Assert.Throws<ArgumentException>(() => ContentFileInfoParser.ParseDosString(dataListing));
         }
 
         [TestCase("08-10-11  12:02PM       <DIR>          Version2", true, 0, "Version2", 2, 12, 10, 8, 2011)]
@@ -117,7 +118,7 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             var expected = new ContentFileInfo(isDirectory, fileSize, lastModified, fileName);
 
             //Act
-            var actual = FtpFileInfoParser.ParseDosString(dataListing);
+            var actual = ContentFileInfoParser.ParseDosString(dataListing);
 
             //Assert
             Assert.AreEqual(expected.IsDirectory, actual.IsDirectory);
