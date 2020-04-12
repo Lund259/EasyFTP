@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <PackageReference Include="Caliburn.Micro" Version="4.0.105-alpha" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Caliburn.Micro" Version="4.0.105-alpha" />
+    <ProjectReference Include="..\EasyFTPClient.Application\EasyFTPClient.Application.csproj" />
   </ItemGroup>
 
 </Project>
