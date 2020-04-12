@@ -1,5 +1,6 @@
 ﻿using EasyFTPClient.Application.Acquaintance.Interfaces;
 using EasyFTPClient.Application.Foundation.Entity.Interfaces;
+using EasyFTPClient.Application.Foundation.Factories.Interfaces;
 using EasyFTPClient.Application.Foundation.Services;
 using EasyFTPClient.Application.Foundation.Services.Interfaces;
 using EasyFTPClient.Application.Foundation.Utilities.Interfaces;
@@ -9,9 +10,9 @@ using System.Text;
 
 namespace EasyFTPClient.Application.Foundation.Factories
 {
-    public class ServiceFactory
+    public class ServiceFactory : IServiceFactory
     {
-        UtilityFactory utilityFactory = new UtilityFactory();
+        readonly UtilityFactory utilityFactory = new UtilityFactory();
 
         public IContentService CreateFtpService(IConnectionProvider connectionProvider)
         {
