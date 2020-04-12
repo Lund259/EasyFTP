@@ -17,11 +17,6 @@ namespace EasyFTPClient.Application.Fascade
             this.contentController = contentController;
         }
 
-        public bool Connect(ConnectionType connectionType, IConnectionProvider connectionProvider)
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<IContentFileInfo> GetContentFileInfo(string path)
         {
             return contentController.GetContentInfo(path);
