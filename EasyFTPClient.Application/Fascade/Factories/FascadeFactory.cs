@@ -19,7 +19,7 @@ namespace EasyFTPClient.Application.Fascade.Factories
             var contentController = connectionType switch
             {
                 ConnectionType.Ftp => applicationFactory.CreateFtpContentController(connectionProvider),
-                _ => throw new NotImplementedException($"{connectionType} has not yet been implemented in Application.Fascade.Factiries.FascadeFactory.CreateContentFascade");
+                _ => throw new NotImplementedException($"{connectionType} has not yet been implemented in Application.Fascade.Factiries.FascadeFactory.CreateContentFascade")
             };
 
             return new ContentFascade(contentController);
