@@ -5,8 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyFTPClient.WPFUI.Views"
         mc:Ignorable="d"
-        Title="ShellView" Height="450" Width="800">
+        Title="Temp View" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- ROW1 -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal"
+                    Margin="5">
+            <TextBox MinWidth="100" Margin="5"
+                     x:Name="Url"/>
+            <TextBox MinWidth="100" Margin="5"
+                     x:Name="Username"/>
+            <TextBox MinWidth="100" Margin="5"
+                     x:Name="Password"/>
+            <Button Margin="5" Padding="2" x:Name="ConnectButton">Connect</Button>
+        </StackPanel>
+
+        <ListView Grid.Row="1" x:Name="ContentFiles" DisplayMemberPath="FileName">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding FileName}" />
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding FileSize}" />
+                    <GridViewColumn Header="Last Modified" DisplayMemberBinding="{Binding LastModifiedDate}" />
+                    <GridViewColumn Header="Directory">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsDirectory, Mode=OneTime}" IsHitTestVisible="False"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
         
     </Grid>
 </Window>
