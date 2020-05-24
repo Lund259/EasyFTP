@@ -1,42 +1,39 @@
 ﻿using Caliburn.Micro;
-using EasyFTPClient.Application.Acquaintance;
-using EasyFTPClient.Application.Acquaintance.Interfaces;
-using EasyFTPClient.Application.Fascade.Factories;
-using EasyFTPClient.Application.Fascade.Interfaces;
 using EasyFTPClient.WPFUI.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace EasyFTPClient.WPFUI.ViewModels
 {
-    public class ShellViewModel : Screen
+    public class ShellViewModel : Conductor<IScreen>
     {
-        private BindableCollection<IContentFileInfo> contentFiles;
+        public Page[] Pages { get; set; }
 
-        public string Url { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        private Page _currentPage;
 
-        public BindableCollection<IContentFileInfo> ContentFiles 
-        { 
-            get => contentFiles;
+        public Page CurrentPage
+        {
+            get { return _currentPage; }
             set
             {
-                contentFiles = value;
-                NotifyOfPropertyChange(() => ContentFiles);
+                _currentPage = value;
+                NotifyOfPropertyChange(() => CurrentPage);
+                LoadView();
             }
         }
 
-
-        public void ConnectButton()
+        public ShellViewModel()
         {
-            IConnectionProvider connection = new Connection(new Uri(Url), Username, Password);
-            IContentFascade contentFascade = new FascadeFactory().CreateContentFascade(Application.Fascade.Entity.ConnectionType.Ftp, connection);
+            Pages = new Page[]
+            {
+                new Page("Remote Files", new FtpFilesViewModel())
+            };
+            CurrentPage = Pages[0];
+        }
 
-            ContentFiles = new BindableCollection<IContentFileInfo>(contentFascade.GetContentFileInfo(""));
+        public void LoadView()
+        {
+            ActivateItemAsync(CurrentPage.Screen, CancellationToken.None);
         }
     }
 }
