@@ -14,29 +14,6 @@ namespace EasyFTPClient.WPFUI.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        private BindableCollection<IContentFileInfo> contentFiles;
 
-        public string Url { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-
-        public BindableCollection<IContentFileInfo> ContentFiles 
-        { 
-            get => contentFiles;
-            set
-            {
-                contentFiles = value;
-                NotifyOfPropertyChange(() => ContentFiles);
-            }
-        }
-
-
-        public void ConnectButton()
-        {
-            IConnectionProvider connection = new Connection(new Uri(Url), Username, Password);
-            IContentFascade contentFascade = new FascadeFactory().CreateContentFascade(Application.Fascade.Entity.ConnectionType.Ftp, connection);
-
-            ContentFiles = new BindableCollection<IContentFileInfo>(contentFascade.GetContentFileInfo(""));
-        }
     }
 }
