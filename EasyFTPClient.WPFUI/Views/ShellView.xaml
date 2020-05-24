@@ -5,41 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyFTPClient.WPFUI.Views"
         mc:Ignorable="d"
-        Title="Temp View" Height="450" Width="800">
+        Title="EasyFTP" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
-        <!-- ROW1 -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal"
-                    Margin="5">
-            <TextBox MinWidth="100" Margin="5"
-                     x:Name="Url"/>
-            <TextBox MinWidth="100" Margin="5"
-                     x:Name="Username"/>
-            <TextBox MinWidth="100" Margin="5"
-                     x:Name="Password"/>
-            <Button Margin="5" Padding="2" x:Name="ConnectButton">Connect</Button>
-        </StackPanel>
+        <!-- ROW 0 -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
 
-        <ListView Grid.Row="1" x:Name="ContentFiles" DisplayMemberPath="FileName">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding FileName}" />
-                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding FileSize}" />
-                    <GridViewColumn Header="Last Modified" DisplayMemberBinding="{Binding LastModifiedDate}" />
-                    <GridViewColumn Header="Directory">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsDirectory, Mode=OneTime}" IsHitTestVisible="False"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+            <!-- COLUMN 0 -->
+            <ListBox Grid.Column="0" Margin="0 16 0 16" SelectedIndex="0" 
+                             ItemsSource="{Binding Pages}" SelectedValue="{Binding CurrentPage}">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name}" Margin="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            <!-- COLUMN 2 -->
+
+            <TextBlock Grid.Column="2" Margin="10" TextAlignment="Center"
+                       Text="EasyFTP" FontSize="25" FontWeight="Bold"/>
+        </Grid>
         
+        <!-- ROW 1 -->
+        <ContentControl Grid.Row="1" x:Name="ActiveItem"/>
     </Grid>
 </Window>
