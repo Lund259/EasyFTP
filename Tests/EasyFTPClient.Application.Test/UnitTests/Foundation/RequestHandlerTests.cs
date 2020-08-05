@@ -4,7 +4,7 @@ using EasyFTPClient.Application.Foundation.Entity;
 using EasyFTPClient.Application.Foundation.Entity.Interfaces;
 using EasyFTPClient.Application.Foundation.Factories;
 using EasyFTPClient.Application.Foundation.Utilities.Interfaces;
-using EasyFTPClient.Application.Test.UnitTests.Foundation.Mocks;
+using FakeItEasy;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -111,16 +111,19 @@ namespace EasyFTPClient.Application.Test.UnitTests.Foundation
             }
             responseStream.Seek(0, SeekOrigin.Begin);
 
-            ResponseMock responseMock = new ResponseMock(responseStream);
-            IRequest request = new RequestMock(responseMock);
+            var responseMock = A.Fake<IResponse>();
+            A.CallTo(() => responseMock.GetResponseStream()).Returns(responseStream);
+
+            IRequest request = A.Fake<IRequest>();
+            A.CallTo(() => request.GetResponse()).Returns(responseMock);
 
             //Act
             var actual = requestHandler.GetResponseStrings(request);
 
             //Assert
             Assert.AreEqual(expected, actual);
-            Assert.IsTrue(responseMock.CloseWasCalled);
-            Assert.IsTrue(responseMock.DisposeWasCalled);
+            A.CallTo(() => responseMock.Dispose()).MustHaveHappened();
+            A.CallTo(() => responseMock.Close()).MustHaveHappened();
         }
     }
 }
